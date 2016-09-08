@@ -27,11 +27,11 @@ public class SSHManager {
 	private void doCommonConstructorActions(String userName, String password, String connectionIP,
 			String knownHostsFileName) {
 		jschSSHChannel = new JSch();
-		try {
-			jschSSHChannel.setKnownHosts(knownHostsFileName);
-		} catch (JSchException jschX) {
-			log.error("{}",jschX.getMessage());
-		}
+//		try {
+//			jschSSHChannel.setKnownHosts(knownHostsFileName);
+//		} catch (JSchException jschX) {
+//			log.error("{}",jschX.getMessage());
+//		}
 		strUserName = userName;
 		strPassword = password;
 		strConnectionIP = connectionIP;
@@ -63,7 +63,7 @@ public class SSHManager {
 			sesConnection = jschSSHChannel.getSession(strUserName, strConnectionIP, intConnectionPort);
 			sesConnection.setPassword(strPassword);
 			// UNCOMMENT THIS FOR TESTING PURPOSES, BUT DO NOT USE IN PRODUCTION
-			// sesConnection.setConfig("StrictHostKeyChecking", "no");
+			sesConnection.setConfig("StrictHostKeyChecking", "no");
 			sesConnection.connect(intTimeOut);
 		} catch (JSchException jschX) {
 			errorMessage = jschX.getMessage();
