@@ -69,12 +69,21 @@ public class ConnectionPoolFactory {
 			} catch (JSchException jschX) {
 				log.error(jschX.getMessage());
 			}
+			log.info("create session object,id:{}",sessConnection.toString());
 			return sessConnection;
 		}
 
 		@Override
 		public PooledObject<Session> wrap(Session arg0) {
 			return new DefaultPooledObject<Session>(arg0);
+		}
+		
+		@Override
+		public void destroyObject(PooledObject<Session> p) throws Exception {
+			log.info("Enter connection pool factory.destroyObject()");
+			if(p != null){
+				p.getObject().disconnect();
+			}
 		}
 		
 	}
